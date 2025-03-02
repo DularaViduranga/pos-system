@@ -2,10 +2,7 @@ package com.pos.kuppiya.point_of_sale.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -18,6 +15,7 @@ public class Customer {
 
     @Id
     @Column(name = "customer_id", length = 45)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int customerId;
 
     @Column(name = "customer_name", length = 180, nullable = false)
@@ -44,6 +42,15 @@ public class Customer {
 
     public Customer(int customerId, String customerName, String customerAddress, double customerSalary, ArrayList contactNumbers, String nic, boolean activeState) {
         this.customerId = customerId;
+        this.customerName = customerName;
+        this.customerAddress = customerAddress;
+        this.customerSalary = customerSalary;
+        this.contactNumbers = contactNumbers;
+        this.nic = nic;
+        this.activeState = activeState;
+    }
+
+    public Customer(String customerName, String customerAddress, double customerSalary, ArrayList contactNumbers, String nic, boolean activeState) {
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.customerSalary = customerSalary;

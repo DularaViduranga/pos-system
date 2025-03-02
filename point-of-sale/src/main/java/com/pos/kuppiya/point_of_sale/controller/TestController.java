@@ -1,6 +1,9 @@
 package com.pos.kuppiya.point_of_sale.controller;
 
 import com.pos.kuppiya.point_of_sale.dto.CustomerDTO;
+
+import com.pos.kuppiya.point_of_sale.dto.request.CustomerSaveRequestDTO;
+import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.kuppiya.point_of_sale.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +17,15 @@ public class TestController {
     private CustomerService customerService;
 
     @PostMapping(path = "/save")
-    public String saveCustomer(@RequestBody CustomerDTO customerDTO) {
-        String id = customerService.addCustomer(customerDTO);
+    public String saveCustomer(@RequestBody CustomerSaveRequestDTO customerSaveRequestDTO) {
+        String id = customerService.addCustomer(customerSaveRequestDTO);
         return id;
     }
 
-
+    @PutMapping(path = "/update")
+    public String updateCustomer(@RequestBody CustomerUpdateRequestDTO customerUpdateRequestDTO) {
+        String updated = customerService.updateCustomer(customerUpdateRequestDTO);
+        return updated;
+    }
 
 }
