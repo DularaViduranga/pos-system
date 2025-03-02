@@ -75,7 +75,6 @@ public class CustomerServiceIMPL implements CustomerService {
     @Override
     public List<CustomerDTO> getAllCustomers() {
         List<Customer>getCustomers = customerRepo.findAll();
-        List<CustomerDTO>customerDTOList = new ArrayList<>();
         List<CustomerDTO> customerDTOS = modelMapper.map(getCustomers,new TypeToken<List<CustomerDTO>>(){}.getType());
         return customerDTOS;
     }
