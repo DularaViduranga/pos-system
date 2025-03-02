@@ -54,7 +54,6 @@ public class CustomerServiceIMPL implements CustomerService {
             System.out.println("Customer not found");
             return "Customer not found";
         }
-
     }
 
     @Override
@@ -74,10 +73,6 @@ public class CustomerServiceIMPL implements CustomerService {
         }else{
             return null;
         }
-
-
     }
-
-
 }
 
