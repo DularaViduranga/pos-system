@@ -4,6 +4,8 @@ import com.pos.kuppiya.point_of_sale.dto.CustomerDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerSaveRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateRequestDTO;
 
+import java.util.List;
+
 
 public interface CustomerService {
 
@@ -13,4 +15,6 @@ public interface CustomerService {
 
 
     CustomerDTO getCustomerById(int id);
+
+    List<CustomerDTO> getAllCustomers();
 }

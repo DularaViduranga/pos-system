@@ -8,6 +8,8 @@ import com.pos.kuppiya.point_of_sale.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/test")
 @CrossOrigin
@@ -31,10 +33,17 @@ public class TestController {
     @GetMapping(
             path = {"/get-by-id"},
             params = {"id"}
-            )
+    )
     public CustomerDTO getCustomerById(@RequestParam(value = "id") int id) {
         CustomerDTO customerDTO = customerService.getCustomerById(id);
         return customerDTO;
     }
+
+    @GetMapping(path = "/get-all-cus")
+    public List<CustomerDTO> getAllCustomers() {
+        List<CustomerDTO> allCustomers = customerService.getAllCustomers();
+        return allCustomers;
+    }
+
 
 }
