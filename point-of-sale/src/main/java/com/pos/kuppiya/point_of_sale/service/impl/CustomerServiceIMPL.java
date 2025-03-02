@@ -63,19 +63,12 @@ public class CustomerServiceIMPL implements CustomerService {
         if (customer.isPresent()){
             CustomerDTO customerDTO = new CustomerDTO(
                     customer.get().getCustomerId(),
-
-
                     customer.get().getCustomerName(),
                     customer.get().getCustomerAddress(),
-
-
                     customer.get().getCustomerSalary(),
                     customer.get().getContactNumbers(),
-
                     customer.get().getNic(),
                     customer.get().isActiveState()
-
-
             );
             return customerDTO;
         }else{
