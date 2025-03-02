@@ -9,6 +9,9 @@ import com.pos.kuppiya.point_of_sale.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 @Service
 public class CustomerServiceIMPL implements CustomerService {
 
@@ -46,12 +49,42 @@ public class CustomerServiceIMPL implements CustomerService {
             customer.setNic(customerUpdateRequestDTO.getNic());
             customer.setActiveState(customerUpdateRequestDTO.isActiveState());
 
-            customerRepo.save(customer);
+            return customerRepo.save(customer).getCustomerName()+ " updated";
         }else {
             System.out.println("Customer not found");
+            return "Customer not found";
         }
 
-        return "";
     }
+
+    @Override
+    public CustomerDTO getCustomerById(int id) {
+        Optional<Customer> customer = customerRepo.findById(id);
+        if (customer.isPresent()){
+            CustomerDTO customerDTO = new CustomerDTO(
+                    customer.get().getCustomerId(),
+
+
+                    customer.get().getCustomerName(),
+                    customer.get().getCustomerAddress(),
+
+
+                    customer.get().getCustomerSalary(),
+                    customer.get().getContactNumbers(),
+
+                    customer.get().getNic(),
+                    customer.get().isActiveState()
+
+
+            );
+            return customerDTO;
+        }else{
+            return null;
+        }
+
+
+    }
+
+
 }
 

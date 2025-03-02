@@ -28,4 +28,13 @@ public class TestController {
         return updated;
     }
 
+    @GetMapping(
+            path = {"/get-by-id"},
+            params = {"id"}
+            )
+    public CustomerDTO getCustomerById(@RequestParam(value = "id") int id) {
+        CustomerDTO customerDTO = customerService.getCustomerById(id);
+        return customerDTO;
+    }
+
 }

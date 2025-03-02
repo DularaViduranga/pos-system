@@ -15,14 +15,14 @@ public class CustomerDTO {
     public CustomerDTO() {
     }
 
-    public CustomerDTO(boolean activeState, String nic, ArrayList contactNumbers, double customerSalary, String customerAddress, String customerName, int customerId) {
-        this.activeState = activeState;
-        this.nic = nic;
-        this.contactNumbers = contactNumbers;
-        this.customerSalary = customerSalary;
-        this.customerAddress = customerAddress;
-        this.customerName = customerName;
+    public CustomerDTO(int customerId, String customerName, String customerAddress, double customerSalary, ArrayList contactNumbers, String nic, boolean activeState) {
         this.customerId = customerId;
+        this.customerName = customerName;
+        this.customerAddress = customerAddress;
+        this.customerSalary = customerSalary;
+        this.contactNumbers = contactNumbers;
+        this.nic = nic;
+        this.activeState = activeState;
     }
 
     public int getCustomerId() {
