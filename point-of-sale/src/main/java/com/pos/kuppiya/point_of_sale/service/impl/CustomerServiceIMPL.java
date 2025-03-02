@@ -23,6 +23,7 @@ public class CustomerServiceIMPL implements CustomerService {
 
     @Autowired
     private ModelMapper modelMapper;
+
     @Override
     public String addCustomer(CustomerSaveRequestDTO customerSaveRequestDTO) {
         Customer customer = new Customer(
@@ -34,17 +35,17 @@ public class CustomerServiceIMPL implements CustomerService {
                 customerSaveRequestDTO.getNic(),
                 false
         );
-        if (!customerRepo.existsById(customer.getCustomerId())){
+        if (!customerRepo.existsById(customer.getCustomerId())) {
             customerRepo.save(customer);
-            return customer.getCustomerName()+" saved";
-        }else{
+            return customer.getCustomerName() + " saved";
+        } else {
             return "Customer already exists";
         }
     }
 
     @Override
     public String updateCustomer(CustomerUpdateRequestDTO customerUpdateRequestDTO) {
-        if (customerRepo.existsById(customerUpdateRequestDTO.getCustomerId())){
+        if (customerRepo.existsById(customerUpdateRequestDTO.getCustomerId())) {
             Customer customer = customerRepo.getReferenceById(customerUpdateRequestDTO.getCustomerId());
 
             customer.setCustomerName(customerUpdateRequestDTO.getCustomerName());
@@ -54,8 +55,8 @@ public class CustomerServiceIMPL implements CustomerService {
             customer.setNic(customerUpdateRequestDTO.getNic());
             customer.setActiveState(customerUpdateRequestDTO.isActiveState());
 
-            return customerRepo.save(customer).getCustomerName()+ " updated";
-        }else {
+            return customerRepo.save(customer).getCustomerName() + " updated";
+        } else {
             System.out.println("Customer not found");
             return "Customer not found";
         }
@@ -64,18 +65,19 @@ public class CustomerServiceIMPL implements CustomerService {
     @Override
     public CustomerDTO getCustomerById(int id) {
         Optional<Customer> customer = customerRepo.findById(id);
-        if (customer.isPresent()){
-            CustomerDTO customerDTO = modelMapper.map(customer.get(),CustomerDTO.class);
+        if (customer.isPresent()) {
+            CustomerDTO customerDTO = modelMapper.map(customer.get(), CustomerDTO.class);
             return customerDTO;
-        }else{
+        } else {
             return null;
         }
     }
 
     @Override
     public List<CustomerDTO> getAllCustomers() {
-        List<Customer>getCustomers = customerRepo.findAll();
-        List<CustomerDTO> customerDTOS = modelMapper.map(getCustomers,new TypeToken<List<CustomerDTO>>(){}.getType());
+        List<Customer> getCustomers = customerRepo.findAll();
+        List<CustomerDTO> customerDTOS = modelMapper.map(getCustomers, new TypeToken<List<CustomerDTO>>() {
+        }.getType());
         return customerDTOS;
     }
 }
