@@ -17,4 +17,6 @@ public interface CustomerService {
     CustomerDTO getCustomerById(int id);
 
     List<CustomerDTO> getAllCustomers();
+
+    boolean deleteCustomer(int id);
 }

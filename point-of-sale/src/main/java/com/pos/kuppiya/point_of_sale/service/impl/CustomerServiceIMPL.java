@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -79,6 +80,17 @@ public class CustomerServiceIMPL implements CustomerService {
         List<CustomerDTO> customerDTOS = modelMapper.map(getCustomers, new TypeToken<List<CustomerDTO>>() {
         }.getType());
         return customerDTOS;
+    }
+
+    @Override
+    public boolean deleteCustomer(int id) {
+        if (customerRepo.existsById(id)) {
+            customerRepo.deleteById(id);
+            //return true;
+        } else {
+            throw new NoSuchElementException("Not found customer for this id");
+        }
+        return true;
     }
 }
 

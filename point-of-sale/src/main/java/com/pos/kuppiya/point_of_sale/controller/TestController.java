@@ -45,5 +45,11 @@ public class TestController {
         return allCustomers;
     }
 
+    @DeleteMapping(path = "/delete-cus/{id}")
+    public String deleteCustomer(@PathVariable(value = "id")int id) {
+        boolean deletedCustomer = customerService.deleteCustomer(id);
+        return "delete cus";
+    }
+
 
 }
