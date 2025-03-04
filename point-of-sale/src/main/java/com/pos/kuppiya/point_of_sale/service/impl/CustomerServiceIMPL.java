@@ -6,6 +6,7 @@ import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.kuppiya.point_of_sale.entity.Customer;
 import com.pos.kuppiya.point_of_sale.repo.CustomerRepo;
 import com.pos.kuppiya.point_of_sale.service.CustomerService;
+import com.pos.kuppiya.point_of_sale.util.mappers.CustomerMapper;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class CustomerServiceIMPL implements CustomerService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private CustomerMapper customerMapper;
 
     @Override
     public String addCustomer(CustomerSaveRequestDTO customerSaveRequestDTO) {
@@ -67,7 +71,8 @@ public class CustomerServiceIMPL implements CustomerService {
     public CustomerDTO getCustomerById(int id) {
         Optional<Customer> customer = customerRepo.findById(id);
         if (customer.isPresent()) {
-            CustomerDTO customerDTO = modelMapper.map(customer.get(), CustomerDTO.class);
+            //CustomerDTO customerDTO = modelMapper.map(customer.get(), CustomerDTO.class);
+            CustomerDTO customerDTO = customerMapper.entityToDto(customer.get());
             return customerDTO;
         } else {
             return null;
@@ -95,11 +100,11 @@ public class CustomerServiceIMPL implements CustomerService {
     @Override
     public List<CustomerDTO> getByName(String customerName) {
         List<Customer> customers = customerRepo.findAllByCustomerNameEquals(customerName);
-        if (customers.size()!=0){
+        if (customers.size() != 0) {
             List<CustomerDTO> customerDTOS = modelMapper.map(customers, new TypeToken<List<CustomerDTO>>() {
             }.getType());
             return customerDTOS;
-        }else{
+        } else {
             throw new NoSuchElementException("Not found customer for this name");
         }
     }
