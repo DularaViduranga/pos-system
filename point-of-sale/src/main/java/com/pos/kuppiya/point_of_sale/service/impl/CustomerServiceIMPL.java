@@ -86,11 +86,22 @@ public class CustomerServiceIMPL implements CustomerService {
     public boolean deleteCustomer(int id) {
         if (customerRepo.existsById(id)) {
             customerRepo.deleteById(id);
-            //return true;
         } else {
             throw new NoSuchElementException("Not found customer for this id");
         }
         return true;
+    }
+
+    @Override
+    public List<CustomerDTO> getByName(String customerName) {
+        List<Customer> customers = customerRepo.findAllByCustomerNameEquals(customerName);
+        if (customers.size()!=0){
+            List<CustomerDTO> customerDTOS = modelMapper.map(customers, new TypeToken<List<CustomerDTO>>() {
+            }.getType());
+            return customerDTOS;
+        }else{
+            throw new NoSuchElementException("Not found customer for this name");
+        }
     }
 }
 

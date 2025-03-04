@@ -51,5 +51,13 @@ public class TestController {
         return "delete cus";
     }
 
+    @GetMapping(
+            path = {"/get-by-name"},
+            params = {"name"}
+    )
+    public List<CustomerDTO> getCustomerByName(@RequestParam(value = "name")String customerName) {
+        List<CustomerDTO> getCustomer = customerService.getByName(customerName);
+        return getCustomer;
+    }
 
 }
