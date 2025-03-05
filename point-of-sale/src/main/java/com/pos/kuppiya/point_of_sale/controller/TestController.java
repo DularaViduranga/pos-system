@@ -60,4 +60,12 @@ public class TestController {
         return getCustomer;
     }
 
+    @GetMapping(
+            path = {"/get-by-active-state"}
+    )
+    public List<CustomerDTO> getCustomerByActiveState(){
+        List<CustomerDTO> getCustomer = customerService.getCustomerByActiveState();
+        return getCustomer;
+    }
+
 }

@@ -108,5 +108,16 @@ public class CustomerServiceIMPL implements CustomerService {
             throw new NoSuchElementException("Not found customer for this name");
         }
     }
+
+    @Override
+    public List<CustomerDTO> getCustomerByActiveState() {
+        List<Customer> customers = customerRepo.findAllByActiveStateEquals(false);
+        if(customers.size() != 0){
+            List<CustomerDTO> customerDTOS = customerMapper.entityListToDTOList(customers);
+            return customerDTOS;
+        }else {
+            throw new NoSuchElementException("Not found customer for active state");
+        }
+    }
 }
 
