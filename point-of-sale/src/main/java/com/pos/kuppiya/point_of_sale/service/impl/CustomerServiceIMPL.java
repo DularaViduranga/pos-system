@@ -3,6 +3,7 @@ package com.pos.kuppiya.point_of_sale.service.impl;
 import com.pos.kuppiya.point_of_sale.dto.CustomerDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerSaveRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateRequestDTO;
+import com.pos.kuppiya.point_of_sale.dto.response.ResponseActiveCustomerDTO;
 import com.pos.kuppiya.point_of_sale.entity.Customer;
 import com.pos.kuppiya.point_of_sale.repo.CustomerRepo;
 import com.pos.kuppiya.point_of_sale.service.CustomerService;
@@ -114,6 +115,17 @@ public class CustomerServiceIMPL implements CustomerService {
         List<Customer> customers = customerRepo.findAllByActiveStateEquals(false);
         if(customers.size() != 0){
             List<CustomerDTO> customerDTOS = customerMapper.entityListToDTOList(customers);
+            return customerDTOS;
+        }else {
+            throw new NoSuchElementException("Not found customer for active state");
+        }
+    }
+
+    @Override
+    public List<ResponseActiveCustomerDTO> getCustomerByActiveStateAndName() {
+        List<Customer> customers = customerRepo.findAllByActiveStateEquals(false);
+        if(customers.size() != 0){
+            List<ResponseActiveCustomerDTO> customerDTOS = customerMapper.entityListToDTOListOnlyName(customers);
             return customerDTOS;
         }else {
             throw new NoSuchElementException("Not found customer for active state");

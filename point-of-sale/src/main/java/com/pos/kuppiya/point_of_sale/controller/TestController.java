@@ -4,6 +4,7 @@ import com.pos.kuppiya.point_of_sale.dto.CustomerDTO;
 
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerSaveRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateRequestDTO;
+import com.pos.kuppiya.point_of_sale.dto.response.ResponseActiveCustomerDTO;
 import com.pos.kuppiya.point_of_sale.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -67,5 +68,14 @@ public class TestController {
         List<CustomerDTO> getCustomer = customerService.getCustomerByActiveState();
         return getCustomer;
     }
+
+    @GetMapping(
+            path = {"/get-name-by-active-state"}
+    )
+    public List<ResponseActiveCustomerDTO> getCustomerByActiveStateAndName(){
+        List<ResponseActiveCustomerDTO> getCustomer = customerService.getCustomerByActiveStateAndName();
+        return getCustomer;
+    }
+
 
 }
