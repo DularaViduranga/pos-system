@@ -2,6 +2,7 @@ package com.pos.kuppiya.point_of_sale.service;
 
 import com.pos.kuppiya.point_of_sale.dto.CustomerDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerSaveRequestDTO;
+import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateQueryRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.response.ResponseActiveCustomerDTO;
 
@@ -26,4 +27,6 @@ public interface CustomerService {
     List<CustomerDTO> getCustomerByActiveState();
 
     List<ResponseActiveCustomerDTO> getCustomerByActiveStateAndName();
+
+    String updateCustomerByQuery(CustomerUpdateQueryRequestDTO customerUpdateQueryRequestDTO,int id);
 }

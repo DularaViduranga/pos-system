@@ -2,6 +2,7 @@ package com.pos.kuppiya.point_of_sale.service.impl;
 
 import com.pos.kuppiya.point_of_sale.dto.CustomerDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerSaveRequestDTO;
+import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateQueryRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.response.ResponseActiveCustomerDTO;
 import com.pos.kuppiya.point_of_sale.entity.Customer;
@@ -129,6 +130,17 @@ public class CustomerServiceIMPL implements CustomerService {
             return customerDTOS;
         }else {
             throw new NoSuchElementException("Not found customer for active state");
+        }
+    }
+
+    @Override
+    public String updateCustomerByQuery(CustomerUpdateQueryRequestDTO customerUpdateQueryRequestDTO,int id) {
+        if(customerRepo.existsById(id)) {
+            Customer customer = customerRepo.getReferenceById(id);
+            customerRepo.updateCustomerByQuery(customerUpdateQueryRequestDTO.getCustomerName(),customerUpdateQueryRequestDTO.getNic(),id);
+            return "updated "+id;
+        }else{
+            return "Customer not found "+id;
         }
     }
 }

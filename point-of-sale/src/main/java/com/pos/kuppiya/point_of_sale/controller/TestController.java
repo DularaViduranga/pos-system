@@ -3,6 +3,7 @@ package com.pos.kuppiya.point_of_sale.controller;
 import com.pos.kuppiya.point_of_sale.dto.CustomerDTO;
 
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerSaveRequestDTO;
+import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateQueryRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.response.ResponseActiveCustomerDTO;
 import com.pos.kuppiya.point_of_sale.service.CustomerService;
@@ -77,5 +78,10 @@ public class TestController {
         return getCustomer;
     }
 
+    @PutMapping(path = "/update-query/{id}")
+    public String updateCustomerByQuery(@RequestBody CustomerUpdateQueryRequestDTO customerUpdateQueryRequestDTO, @PathVariable(value = "id")int id) {
+        String updated = customerService.updateCustomerByQuery(customerUpdateQueryRequestDTO,id);
+        return updated;
+    }
 
 }
