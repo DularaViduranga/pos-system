@@ -2,11 +2,16 @@ package com.pos.kuppiya.point_of_sale.controller;
 
 import com.pos.kuppiya.point_of_sale.dto.CustomerDTO;
 
+import com.pos.kuppiya.point_of_sale.dto.request.CustomerNameSalNicUpdateQueryRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerSaveRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateQueryRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.response.ResponseActiveCustomerDTO;
+import com.pos.kuppiya.point_of_sale.dto.response.ResponseAdderAndSalCustomerDTO;
 import com.pos.kuppiya.point_of_sale.service.CustomerService;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +36,10 @@ public class TestController {
         String updated = customerService.updateCustomer(customerUpdateRequestDTO);
         return updated;
     }
+
+
+
+
 
     @GetMapping(
             path = {"/get-by-id"},
@@ -70,6 +79,12 @@ public class TestController {
         return getCustomer;
     }
 
+    @GetMapping(path = "/get-if-false-by-id/{id}")
+    public CustomerDTO getCustomerByIDIfFalse(@PathVariable(value = "id")int id) {
+        CustomerDTO getCustomer = customerService.getCustomerByIDIfFalse(id);
+        return getCustomer;
+    }
+
     @GetMapping(
             path = {"/get-name-by-active-state"}
     )
@@ -82,6 +97,31 @@ public class TestController {
     public String updateCustomerByQuery(@RequestBody CustomerUpdateQueryRequestDTO customerUpdateQueryRequestDTO, @PathVariable(value = "id")int id) {
         String updated = customerService.updateCustomerByQuery(customerUpdateQueryRequestDTO,id);
         return updated;
+    }
+
+    @PutMapping(path = "/updateNameSalNic-query/{id}")
+    public String updateCustomerNameSalNicByQuery(@RequestBody CustomerNameSalNicUpdateQueryRequestDTO customerNameSalNicUpdateQueryRequestDTO, @PathVariable(value = "id")int id) {
+        String updated = customerService.updateCustomerNameSalNicByQuery(customerNameSalNicUpdateQueryRequestDTO,id);
+        return updated;
+    }
+    
+
+    @GetMapping(
+            path = {"/get-all-by-nic"},
+            params = {"nic"}
+    )
+    public CustomerDTO getCustomerByNic(@RequestParam(value = "nic") String nic) {
+        CustomerDTO customerDTO = customerService.getCustomerByNic(nic);
+        return customerDTO;
+    }
+
+    @GetMapping(
+            path = {"/get-sal-add-by-id"},
+            params = {"id"}
+    )
+    public ResponseAdderAndSalCustomerDTO getCustomerSalAndAdderById(@RequestParam(value = "id") int id) {
+        ResponseAdderAndSalCustomerDTO customerDTO = customerService.getCustomerSalAndAdderById(id);
+        return customerDTO;
     }
 
 }

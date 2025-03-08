@@ -1,11 +1,16 @@
 package com.pos.kuppiya.point_of_sale.service.impl;
 
 import com.pos.kuppiya.point_of_sale.dto.CustomerDTO;
+import com.pos.kuppiya.point_of_sale.dto.request.CustomerNameSalNicUpdateQueryRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerSaveRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateQueryRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.response.ResponseActiveCustomerDTO;
+
+import com.pos.kuppiya.point_of_sale.dto.response.ResponseAdderAndSalCustomerDTO;
 import com.pos.kuppiya.point_of_sale.entity.Customer;
+import com.pos.kuppiya.point_of_sale.exception.EntryDuplicateException;
+import com.pos.kuppiya.point_of_sale.exception.NotFoundException;
 import com.pos.kuppiya.point_of_sale.repo.CustomerRepo;
 import com.pos.kuppiya.point_of_sale.service.CustomerService;
 import com.pos.kuppiya.point_of_sale.util.mappers.CustomerMapper;
@@ -64,8 +69,9 @@ public class CustomerServiceIMPL implements CustomerService {
 
             return customerRepo.save(customer).getCustomerName() + " updated";
         } else {
-            System.out.println("Customer not found");
-            return "Customer not found";
+//            System.out.println("Customer not found");
+//            return "Customer not found";
+            throw new EntryDuplicateException("Not in database");
         }
     }
 
@@ -143,5 +149,58 @@ public class CustomerServiceIMPL implements CustomerService {
             return "Customer not found "+id;
         }
     }
+
+    @Override
+    public CustomerDTO getCustomerByNic(String nic) {
+        Optional<Customer> customer = customerRepo.findByNic(nic);
+        if (customer.isPresent()) {
+            CustomerDTO customerDTO = customerMapper.entityToDto(customer.get());
+            return customerDTO;
+        } else {
+            throw new NotFoundException("not found");
+        }
+    }
+
+
+
+    @Override
+    public String updateCustomerNameSalNicByQuery(CustomerNameSalNicUpdateQueryRequestDTO customerNameSalNicUpdateQueryRequestDTO, int id) {
+        if(customerRepo.existsById(id)) {
+            Customer customer = customerRepo.getReferenceById(id);
+            customerRepo.updateCustomerNameSalNicByQuery(customerNameSalNicUpdateQueryRequestDTO.getCustomerName(),customerNameSalNicUpdateQueryRequestDTO.getNic(),customerNameSalNicUpdateQueryRequestDTO.getCustomerSalary(),id);
+            return "updated "+id;
+        }else{
+            return "Customer not found "+id;
+        }
+    }
+
+    @Override
+    public ResponseAdderAndSalCustomerDTO getCustomerSalAndAdderById(int id) {
+        Optional<Customer> customer = customerRepo.findById(id);
+        if (customer.isPresent()) {
+            ResponseAdderAndSalCustomerDTO responseAdderAndSalCustomerDTO = customerMapper.entityAdderAndSalCustomerDTO(customer.get());
+            return responseAdderAndSalCustomerDTO;
+        } else {
+            throw new NotFoundException("Not found customer for this id");
+        }
+    }
+
+    @Override
+    public CustomerDTO getCustomerByIDIfFalse(int id) {
+        Optional<Customer> customer = customerRepo.findById(id);
+        if (customer.isPresent()) {
+            if(customer.get().isActiveState()==false) {
+                CustomerDTO customerDTO = customerMapper.entityToDto(customer.get());
+                return customerDTO;
+            }
+            else {
+                System.out.println("This is an active state");
+            }
+        }else {
+            throw new NoSuchElementException("Not found customer for this id");
+        }
+        return null;
+    }
+
 }
 
