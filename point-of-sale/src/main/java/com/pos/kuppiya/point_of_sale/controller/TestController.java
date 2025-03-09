@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @RestController
 @RequestMapping("api/v1/test")
 @CrossOrigin
@@ -123,5 +125,15 @@ public class TestController {
         ResponseAdderAndSalCustomerDTO customerDTO = customerService.getCustomerSalAndAdderById(id);
         return customerDTO;
     }
+
+//    @GetMapping(
+//            path = {"/get-by-state"},
+//            params = {"actState"}
+//    )
+//    public List<CustomerDTO> getCustomerByActState(@RequestParam(value = "actState") String actState) {
+//        List<CustomerDTO> customerDTOS = customerService.getCustomerByActState(actState);
+//        return customerDTOS;
+//    }
+
 
 }
