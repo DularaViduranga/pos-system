@@ -9,20 +9,15 @@ import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.response.ResponseActiveCustomerDTO;
 import com.pos.kuppiya.point_of_sale.dto.response.ResponseAdderAndSalCustomerDTO;
 import com.pos.kuppiya.point_of_sale.service.CustomerService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 @RestController
-@RequestMapping("api/v1/test")
+@RequestMapping("api/v1/customer")
 @CrossOrigin
-public class TestController {
+public class CustomerController {
 
     @Autowired
     private CustomerService customerService;

@@ -1,17 +1,11 @@
 package com.pos.kuppiya.point_of_sale.entity;
 
-
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.pos.kuppiya.point_of_sale.entity.enums.MeasuringUnitTypes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
-
-import java.util.ArrayList;
 
 @Entity
 @Table(name = "Item")
@@ -29,7 +23,7 @@ public class Item {
     private String itemName;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "measurinf_unit", length = 180, nullable = false)
+    @Column(name = "measuring_unit", length = 180, nullable = false)
     private MeasuringUnitTypes measuringUnit;
 
     @Column(name = "balance_qty", length = 180, nullable = false)
@@ -40,4 +34,8 @@ public class Item {
 
     @Column(name = "selling_price", length = 180, nullable = false)
     private double sellingPrice;
+
+    @Column(name = "active_state",columnDefinition = "TINYINT default 1")
+    private boolean activeState;
+
 }

@@ -1,6 +1,5 @@
-package com.pos.kuppiya.point_of_sale.dto;
+package com.pos.kuppiya.point_of_sale.dto.request;
 
-import com.pos.kuppiya.point_of_sale.entity.enums.MeasuringUnitTypes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,12 +7,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ItemDTO {
-    private int itemId;
+public class ItemSaveRequestDTO {
     private String itemName;
-    private MeasuringUnitTypes measuringUnit;
+    private String measuringUnit;
     private double balanceQty;
     private double supplierPrice;
     private double sellingPrice;
-    private boolean activeState;
 }
