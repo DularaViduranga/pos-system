@@ -43,13 +43,10 @@ public class ItemServiceIMPL implements ItemService {
 
     @Override
     public List<ItemDTO> getAllItems() {
-        //List<Item> getItems = itemRepo.findAll();
-        //List<Item> getItems = new ArrayList<>(itemRepo.findAll());
         List<Item> getItems = StreamSupport
                 .stream(itemRepo.findAll().spliterator(), false)
                 .collect(Collectors.toList());
-        List<ItemDTO> itemDTOS = modelMapper.map(getItems, new TypeToken<List<ItemDTO>>() {
-        }.getType());
+        List<ItemDTO> itemDTOS = modelMapper.map(getItems, new TypeToken<List<ItemDTO>>() {}.getType());
         return itemDTOS;
     }
 }
