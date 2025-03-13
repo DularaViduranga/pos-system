@@ -34,10 +34,6 @@ public class CustomerController {
         return updated;
     }
 
-
-
-
-
     @GetMapping(
             path = {"/get-by-id"},
             params = {"id"}
@@ -121,14 +117,7 @@ public class CustomerController {
         return customerDTO;
     }
 
-//    @GetMapping(
-//            path = {"/get-by-state"},
-//            params = {"actState"}
-//    )
-//    public List<CustomerDTO> getCustomerByActState(@RequestParam(value = "actState") String actState) {
-//        List<CustomerDTO> customerDTOS = customerService.getCustomerByActState(actState);
-//        return customerDTOS;
-//    }
+
 
 
 }

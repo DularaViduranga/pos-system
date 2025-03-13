@@ -9,4 +9,6 @@ public interface ItemService {
     String addItem(ItemSaveRequestDTO itemSaveRequestDTO);
 
     List<ItemDTO> getAllItems();
+
+    List<ItemDTO> getAllItemsByStateType(boolean status);
 }

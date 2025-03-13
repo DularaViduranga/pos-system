@@ -49,4 +49,15 @@ public class ItemServiceIMPL implements ItemService {
         List<ItemDTO> itemDTOS = modelMapper.map(getItems, new TypeToken<List<ItemDTO>>() {}.getType());
         return itemDTOS;
     }
+
+    @Override
+    public List<ItemDTO> getAllItemsByStateType(boolean status) {
+        List<Item> getItems = StreamSupport
+                .stream(itemRepo.findAllByActiveStateEquals(status).spliterator(), false)
+                .collect(Collectors.toList());
+        List<ItemDTO> itemDTOS = modelMapper.map(getItems, new TypeToken<List<ItemDTO>>() {}.getType());
+        return itemDTOS;
+    }
+
+
 }

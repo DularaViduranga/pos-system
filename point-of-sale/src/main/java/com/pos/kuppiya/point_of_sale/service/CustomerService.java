@@ -45,6 +45,4 @@ public interface CustomerService {
 
     CustomerDTO getCustomerByIDIfFalse(int id);
 
-
-    //List<CustomerDTO> getCustomerByActState(String actState);
 }
