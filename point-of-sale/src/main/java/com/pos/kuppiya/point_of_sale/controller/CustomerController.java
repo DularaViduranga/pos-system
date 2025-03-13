@@ -9,10 +9,15 @@ import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.response.ResponseActiveCustomerDTO;
 import com.pos.kuppiya.point_of_sale.dto.response.ResponseAdderAndSalCustomerDTO;
 import com.pos.kuppiya.point_of_sale.service.CustomerService;
+import com.pos.kuppiya.point_of_sale.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/customer")
@@ -117,7 +122,19 @@ public class CustomerController {
         return customerDTO;
     }
 
+    @GetMapping(path = {"/get-all-customers-count-by-state"})
+    public ResponseEntity<StandardResponse> getActiveInactiveAllCustomerCount() {
+        int active = customerService.getActiveCustomerCount();
+        int inactive = customerService.getInactiveCustomerCount();
+        int all = active + inactive ;
 
-
-
+        Map<String, Integer> customerCounts = new HashMap<>();
+        customerCounts.put("active" , active);
+        customerCounts.put("inactive" , inactive);
+        customerCounts.put("all" , all);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"Customer counts",customerCounts),
+                HttpStatus.CREATED
+        );
+    }
 }

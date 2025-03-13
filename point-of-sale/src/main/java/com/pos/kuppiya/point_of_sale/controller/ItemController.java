@@ -1,8 +1,9 @@
 package com.pos.kuppiya.point_of_sale.controller;
 
-import com.pos.kuppiya.point_of_sale.dto.CustomerDTO;
+
 import com.pos.kuppiya.point_of_sale.dto.ItemDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.ItemSaveRequestDTO;
+import com.pos.kuppiya.point_of_sale.dto.request.ItemUpdateRequestDTO;
 import com.pos.kuppiya.point_of_sale.service.ItemService;
 import com.pos.kuppiya.point_of_sale.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/item")
@@ -38,7 +41,7 @@ public class ItemController {
     }
 
     @GetMapping(path = {"/get-all-items-state"},params = {"state"})
-    public ResponseEntity<StandardResponse> getAllCustomersBystate(@RequestParam (value = "state")String state) {
+    public ResponseEntity<StandardResponse> getAllItemsBystate(@RequestParam (value = "state")String state) {
         if(state.equalsIgnoreCase("ACTIVE")||state.equalsIgnoreCase("INACTIVE")) {
 //            boolean status = false;
 //            if(state.equalsIgnoreCase("ACTIVE")) {
@@ -61,5 +64,39 @@ public class ItemController {
         else {
             return null;
         }
+    }
+
+    @PutMapping(path = "/updateById")
+    public  ResponseEntity<StandardResponse> updateItemById(@RequestBody ItemUpdateRequestDTO itemUpdateRequestDTO) {
+        String id = itemService.updateItem(itemUpdateRequestDTO);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,id+" item updated success",id),
+                HttpStatus.CREATED
+        );
+    }
+
+    @DeleteMapping(path = "/delete-item/{id}")
+    public  ResponseEntity<StandardResponse> deleteItem(@PathVariable(value = "id")int id) {
+        int deletedItem = itemService.deleteItem(id);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"Item deletion success ",id),
+                HttpStatus.CREATED
+        );
+    }
+
+    @GetMapping(path = {"/get-all-items-count-by-state"})
+    public ResponseEntity<StandardResponse> getActiveInactiveAllItemsCount() {
+        int active = itemService.getActiveCustomerCount();
+        int inactive = itemService.getInactiveCustomerCount();
+        int all = active + inactive ;
+
+        Map<String, Integer> itemCounts = new HashMap<>();
+        itemCounts.put("active" , active);
+        itemCounts.put("inactive" , inactive);
+        itemCounts.put("all" , all);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"Item counts",itemCounts),
+                HttpStatus.CREATED
+        );
     }
 }

@@ -2,7 +2,9 @@ package com.pos.kuppiya.point_of_sale.service.impl;
 
 import com.pos.kuppiya.point_of_sale.dto.CustomerDTO;
 import com.pos.kuppiya.point_of_sale.dto.ItemDTO;
+import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.ItemSaveRequestDTO;
+import com.pos.kuppiya.point_of_sale.dto.request.ItemUpdateRequestDTO;
 import com.pos.kuppiya.point_of_sale.entity.Customer;
 import com.pos.kuppiya.point_of_sale.entity.Item;
 import com.pos.kuppiya.point_of_sale.exception.EntryDuplicateException;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -57,6 +60,43 @@ public class ItemServiceIMPL implements ItemService {
                 .collect(Collectors.toList());
         List<ItemDTO> itemDTOS = modelMapper.map(getItems, new TypeToken<List<ItemDTO>>() {}.getType());
         return itemDTOS;
+    }
+
+    @Override
+    public String updateItem(ItemUpdateRequestDTO itemUpdateRequestDTO) {
+        if (itemRepo.existsById(itemUpdateRequestDTO.getItemId())) {
+            Item item = itemRepo.getReferenceById(itemUpdateRequestDTO.getItemId());
+
+            item.setItemName(itemUpdateRequestDTO.getItemName());
+            item.setMeasuringUnit(itemUpdateRequestDTO.getMeasuringUnit());
+            item.setBalanceQty(itemUpdateRequestDTO.getBalanceQty());
+            item.setSupplierPrice(itemUpdateRequestDTO.getSupplierPrice());
+            item.setSellingPrice(itemUpdateRequestDTO.getSellingPrice());
+
+            return itemRepo.save(item).getItemName();
+        } else {
+            throw new EntryDuplicateException("Not in database");
+        }
+    }
+
+    @Override
+    public int deleteItem(int id) {
+        if (itemRepo.existsById(id)) {
+            itemRepo.deleteById(id);
+        } else {
+            throw new NoSuchElementException("Not found customer for this id");
+        }
+        return id;
+    }
+
+    @Override
+    public int getActiveCustomerCount() {
+        return itemRepo.countByActiveState(true);
+    }
+
+    @Override
+    public int getInactiveCustomerCount() {
+        return itemRepo.countByActiveState(false);
     }
 
 

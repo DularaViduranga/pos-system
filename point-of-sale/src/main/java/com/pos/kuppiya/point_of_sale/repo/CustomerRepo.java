@@ -31,4 +31,7 @@ public interface CustomerRepo extends JpaRepository<Customer,Integer> {
     @Modifying
     @Query(value = "update customer set customer_name=?1,nic=?2,customer_salary=?3 where customer_id=?4 ", nativeQuery = true)
     void updateCustomerNameSalNicByQuery(String customerName, String nic, double customerSalary, int id);
+
+
+    int countByActiveState(boolean activeState);
 }

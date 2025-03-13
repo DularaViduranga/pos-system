@@ -45,4 +45,8 @@ public interface CustomerService {
 
     CustomerDTO getCustomerByIDIfFalse(int id);
 
+
+    int getActiveCustomerCount();
+
+    int getInactiveCustomerCount();
 }

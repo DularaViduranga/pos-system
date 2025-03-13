@@ -202,7 +202,15 @@ public class CustomerServiceIMPL implements CustomerService {
         return null;
     }
 
+    @Override
+    public int getActiveCustomerCount() {
+        return customerRepo.countByActiveState(true);
+    }
 
+    @Override
+    public int getInactiveCustomerCount() {
+        return customerRepo.countByActiveState(false);
+    }
 
 
 }
