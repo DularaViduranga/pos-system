@@ -2,10 +2,12 @@ package com.pos.kuppiya.point_of_sale.controller;
 
 
 import com.pos.kuppiya.point_of_sale.dto.ItemDTO;
+import com.pos.kuppiya.point_of_sale.dto.paginated.PaginatedResponseItemDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.ItemSaveRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.ItemUpdateRequestDTO;
 import com.pos.kuppiya.point_of_sale.service.ItemService;
 import com.pos.kuppiya.point_of_sale.util.StandardResponse;
+import jakarta.validation.constraints.Max;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -96,6 +98,19 @@ public class ItemController {
         itemCounts.put("all" , all);
         return new ResponseEntity<StandardResponse>(
                 new StandardResponse(200,"Item counts",itemCounts),
+                HttpStatus.CREATED
+        );
+    }
+
+    @GetMapping(
+            path = {"get-all-paginated-items"},
+            params = {"page","size"}
+    )
+    public ResponseEntity<StandardResponse> getAllPaginatedItems(@RequestParam(value = "page") int page,@RequestParam(value = "size") @Max(50) int size) {
+        PaginatedResponseItemDTO paginatedResponseItemDTO = itemService.getAllItemsPaginated(page,size);
+
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"Item counts",paginatedResponseItemDTO),
                 HttpStatus.CREATED
         );
     }

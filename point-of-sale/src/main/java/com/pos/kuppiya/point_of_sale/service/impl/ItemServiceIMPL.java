@@ -1,11 +1,9 @@
 package com.pos.kuppiya.point_of_sale.service.impl;
 
-import com.pos.kuppiya.point_of_sale.dto.CustomerDTO;
 import com.pos.kuppiya.point_of_sale.dto.ItemDTO;
-import com.pos.kuppiya.point_of_sale.dto.request.CustomerUpdateRequestDTO;
+import com.pos.kuppiya.point_of_sale.dto.paginated.PaginatedResponseItemDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.ItemSaveRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.ItemUpdateRequestDTO;
-import com.pos.kuppiya.point_of_sale.entity.Customer;
 import com.pos.kuppiya.point_of_sale.entity.Item;
 import com.pos.kuppiya.point_of_sale.exception.EntryDuplicateException;
 import com.pos.kuppiya.point_of_sale.repo.ItemRepo;
@@ -14,6 +12,8 @@ import com.pos.kuppiya.point_of_sale.util.mappers.ItemMapper;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -97,6 +97,15 @@ public class ItemServiceIMPL implements ItemService {
     @Override
     public int getInactiveCustomerCount() {
         return itemRepo.countByActiveState(false);
+    }
+
+    @Override
+    public PaginatedResponseItemDTO getAllItemsPaginated(int page, int size) {
+        Page<Item> getAllItemsByPaginated = itemRepo.findAll(PageRequest.of(page, size));
+        return new PaginatedResponseItemDTO(
+                itemMapper.pageToList(getAllItemsByPaginated),
+                itemRepo.count()
+        );
     }
 
 
