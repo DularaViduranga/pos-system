@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "Item")
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class Item {
     @Id
     @Column(name = "item_id", length = 45)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int itemId;
 
     @Column(name = "item_name", length = 180, nullable = false)
@@ -37,5 +39,8 @@ public class Item {
 
     @Column(name = "active_state",columnDefinition = "TINYINT default 1")
     private boolean activeState;
+
+    @OneToMany(mappedBy="items")
+    private Set<OrderDetails> orderDetails;
 
 }

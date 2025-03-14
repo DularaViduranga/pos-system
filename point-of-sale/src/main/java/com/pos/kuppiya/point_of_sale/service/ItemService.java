@@ -24,4 +24,7 @@ public interface ItemService {
     int getInactiveCustomerCount();
 
     PaginatedResponseItemDTO getAllItemsPaginated(int page, @Max(50) int size);
+
+
+    PaginatedResponseItemDTO getAllActiveItemsPaginated(int page, @Max(50) int size, boolean activeState);
 }

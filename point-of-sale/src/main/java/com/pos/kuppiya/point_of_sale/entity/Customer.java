@@ -7,6 +7,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -15,7 +16,7 @@ public class Customer {
 
     @Id
     @Column(name = "customer_id", length = 45)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customerId;
 
     @Column(name = "customer_name", length = 180, nullable = false)
@@ -36,6 +37,9 @@ public class Customer {
 
     @Column(name = "active_state",columnDefinition = "TINYINT default 1")
     private boolean activeState;
+
+    @OneToMany(mappedBy="customer")
+    private Set<Orders> orders;
 
     public Customer() {
     }
