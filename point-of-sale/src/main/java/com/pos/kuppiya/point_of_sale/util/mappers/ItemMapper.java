@@ -12,5 +12,5 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ItemMapper {
     Item RequestDTOtoEntity(ItemSaveRequestDTO itemSaveRequestDTO);
-    List<ItemDTO> pageToList(Page<Item>page);
+    List<ItemDTO> pageToList(Page<Item> page);
 }
