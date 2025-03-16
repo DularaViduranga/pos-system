@@ -39,7 +39,7 @@ public class Customer {
     private boolean activeState;
 
     @OneToMany(mappedBy="customer")
-    private Set<Orders> orders;
+    private Set<Order> orders;
 
     public Customer() {
     }

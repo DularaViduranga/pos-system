@@ -15,7 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Orders {
+public class Order {
     @Id
     @Column(name = "order_id", length = 45)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,4 +34,9 @@ public class Orders {
     @OneToMany(mappedBy="orders")
     private Set<OrderDetails> orderDetails;
 
+    public Order(Customer customer, Date orderDate, double total) {
+        this.customer = customer;
+        this.orderDate = orderDate;
+        this.total = total;
+    }
 }
