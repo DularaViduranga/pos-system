@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,5 +14,6 @@ public class OrderSaveRequestDTO {
     private int customer;
     private Date orderDate;
     private double total;
+    private boolean activeState;
     private List<OrderDetailRequestDTO> orderDetails;
 }

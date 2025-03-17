@@ -1,9 +1,11 @@
 package com.pos.kuppiya.point_of_sale.controller;
 
+import com.pos.kuppiya.point_of_sale.dto.paginated.PaginatedResponseItemDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.ItemSaveRequestDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.OrderSaveRequestDTO;
 import com.pos.kuppiya.point_of_sale.service.OrderService;
 import com.pos.kuppiya.point_of_sale.util.StandardResponse;
+import jakarta.validation.constraints.Max;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,4 +28,25 @@ public class OrderController {
                 HttpStatus.CREATED
         );
     }
+
+    @GetMapping(
+            params = {"paidStatus","page","size"},
+            path = {"/get_paid_status"}
+    )
+    public ResponseEntity<StandardResponse> getPaidStatus(
+            @RequestParam(value = "paidStatus") String paidStatus,
+            @RequestParam(value = "page") int page,
+            @RequestParam(value = "size") @Max(50) int size
+            ){
+        PaginatedResponseItemDTO paginatedResponseItemDTO = null;
+        if(paidStatus.equalsIgnoreCase("PAID")||paidStatus.equalsIgnoreCase("Not paid")){
+
+        }
+
+
+
+
+        return null;
+    }
+
 }

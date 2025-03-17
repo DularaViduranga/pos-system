@@ -31,6 +31,9 @@ public class Order {
     @Column(name = "total",nullable = false)
     private double total;
 
+    @Column(name = "active_state",columnDefinition = "TINYINT default 1")
+    private boolean activeState;
+
     @OneToMany(mappedBy="orders")
     private Set<OrderDetails> orderDetails;
 
@@ -38,5 +41,6 @@ public class Order {
         this.customer = customer;
         this.orderDate = orderDate;
         this.total = total;
+
     }
 }

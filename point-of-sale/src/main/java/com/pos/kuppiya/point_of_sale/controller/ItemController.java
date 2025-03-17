@@ -45,10 +45,6 @@ public class ItemController {
     @GetMapping(path = {"/get-all-items-state"},params = {"state"})
     public ResponseEntity<StandardResponse> getAllItemsBystate(@RequestParam (value = "state")String state) {
         if(state.equalsIgnoreCase("ACTIVE")||state.equalsIgnoreCase("INACTIVE")) {
-//            boolean status = false;
-//            if(state.equalsIgnoreCase("ACTIVE")) {
-//                status = true;
-//            }
             boolean status = state.equalsIgnoreCase("ACTIVE")?true:false;
             List<ItemDTO> allItems = itemService.getAllItemsByStateType(status);
             return new ResponseEntity<StandardResponse>(
