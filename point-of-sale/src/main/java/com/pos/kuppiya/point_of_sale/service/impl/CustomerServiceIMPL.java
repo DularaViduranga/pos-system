@@ -9,9 +9,11 @@ import com.pos.kuppiya.point_of_sale.dto.response.ResponseActiveCustomerDTO;
 
 import com.pos.kuppiya.point_of_sale.dto.response.ResponseAdderAndSalCustomerDTO;
 import com.pos.kuppiya.point_of_sale.entity.Customer;
+import com.pos.kuppiya.point_of_sale.entity.Order;
 import com.pos.kuppiya.point_of_sale.exception.EntryDuplicateException;
 import com.pos.kuppiya.point_of_sale.exception.NotFoundException;
 import com.pos.kuppiya.point_of_sale.repo.CustomerRepo;
+import com.pos.kuppiya.point_of_sale.repo.OrderRepo;
 import com.pos.kuppiya.point_of_sale.service.CustomerService;
 import com.pos.kuppiya.point_of_sale.util.mappers.CustomerMapper;
 import org.modelmapper.ModelMapper;
@@ -29,6 +31,9 @@ public class CustomerServiceIMPL implements CustomerService {
 
     @Autowired
     private CustomerRepo customerRepo;
+
+    @Autowired
+    private OrderRepo orderRepo;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -98,6 +103,11 @@ public class CustomerServiceIMPL implements CustomerService {
     @Override
     public boolean deleteCustomer(int id) {
         if (customerRepo.existsById(id)) {
+
+//            List<Order> orders = orderRepo.findByCustomer_CustomerId(id);
+//            orderRepo.deleteAll(orders);
+//
+//            // Then, delete the customer
             customerRepo.deleteById(id);
         } else {
             throw new NoSuchElementException("Not found customer for this id");
@@ -112,6 +122,8 @@ public class CustomerServiceIMPL implements CustomerService {
             List<CustomerDTO> customerDTOS = modelMapper.map(customers, new TypeToken<List<CustomerDTO>>() {
             }.getType());
             return customerDTOS;
+
+
         } else {
             throw new NoSuchElementException("Not found customer for this name");
         }
