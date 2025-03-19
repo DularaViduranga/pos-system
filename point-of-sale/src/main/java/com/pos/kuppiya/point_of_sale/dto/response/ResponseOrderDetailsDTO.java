@@ -10,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseOrderDetails {
+public class ResponseOrderDetailsDTO {
     private String customerName;
     private String customerAddress;
     private ArrayList contactNumbers;

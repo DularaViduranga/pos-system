@@ -1,6 +1,6 @@
 package com.pos.kuppiya.point_of_sale.controller;
 
-import com.pos.kuppiya.point_of_sale.dto.paginated.PaginatedResponseOrderDetails;
+import com.pos.kuppiya.point_of_sale.dto.paginated.PaginatedResponseOrderDetailsDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.OrderSaveRequestDTO;
 import com.pos.kuppiya.point_of_sale.service.OrderService;
 import com.pos.kuppiya.point_of_sale.util.StandardResponse;
@@ -29,20 +29,23 @@ public class OrderController {
     }
 
     @GetMapping(
-            params = {"Status","page","size"},
+            params = {"paidStatus","page","size"},
             path = {"/get_paid_status"}
     )
     public ResponseEntity<StandardResponse> getAllCustomers(
-            @RequestParam(value = "Status") String Status,
+            @RequestParam(value = "paidStatus") String Status,
             @RequestParam(value = "page") int page,
             @RequestParam(value = "size") @Max(50) int size
             ){
-        PaginatedResponseOrderDetails paginatedResponseOrderDetails = null;
-        if(Status.equalsIgnoreCase("ACTIVE")||Status.equalsIgnoreCase("INACTIVE")){
-            boolean status = Status.equalsIgnoreCase("ACTIVE")?true:false;
-            paginatedResponseOrderDetails = orderService.getAllOrderDetails(status,page,size);
+        PaginatedResponseOrderDetailsDTO paginatedResponseOrderDetails = null;
+        if(Status.equalsIgnoreCase("PAID")||Status.equalsIgnoreCase("NOTPAID")){
+            boolean paidStatus = Status.equalsIgnoreCase("PAID")?true:false;
+            paginatedResponseOrderDetails = orderService.getAllOrderDetails(paidStatus,page,size);
         }
-        return null;
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"success",paginatedResponseOrderDetails),
+                HttpStatus.OK
+        );
     }
 
 }

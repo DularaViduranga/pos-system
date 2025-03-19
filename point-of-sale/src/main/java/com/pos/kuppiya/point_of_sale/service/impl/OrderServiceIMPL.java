@@ -1,10 +1,9 @@
 package com.pos.kuppiya.point_of_sale.service.impl;
 
-import com.pos.kuppiya.point_of_sale.dto.CustomerDTO;
 import com.pos.kuppiya.point_of_sale.dto.QueryInterfaces.OrderDetailsInterface;
-import com.pos.kuppiya.point_of_sale.dto.paginated.PaginatedResponseOrderDetails;
+import com.pos.kuppiya.point_of_sale.dto.paginated.PaginatedResponseOrderDetailsDTO;
 import com.pos.kuppiya.point_of_sale.dto.request.OrderSaveRequestDTO;
-import com.pos.kuppiya.point_of_sale.entity.Customer;
+import com.pos.kuppiya.point_of_sale.dto.response.ResponseOrderDetailsDTO;
 import com.pos.kuppiya.point_of_sale.entity.Order;
 import com.pos.kuppiya.point_of_sale.entity.OrderDetails;
 import com.pos.kuppiya.point_of_sale.repo.CustomerRepo;
@@ -68,10 +67,26 @@ public class OrderServiceIMPL implements OrderService {
     }
 
     @Override
-    public PaginatedResponseOrderDetails getAllOrderDetails(boolean status, int page, int size) {
+    public PaginatedResponseOrderDetailsDTO getAllOrderDetails(boolean status, int page, int size) {
         List<OrderDetailsInterface> orderDetailsInterfaces = orderRepo.getPaidOrderDetails(status, PageRequest.of(page,size));
-
         System.out.println(orderDetailsInterfaces.get(0).getCustomerName());
-        return null;
+
+        List<ResponseOrderDetailsDTO> responseOrderDetailsDTOS = new ArrayList<>();
+        for(OrderDetailsInterface O : orderDetailsInterfaces){
+//            ResponseOrderDetailsDTO responseOrderDetailsDTO = new ResponseOrderDetailsDTO(
+//                    O.getCustomerName(),O.getCustomerAddress(),O.getContactNumbers(),O.getOrderDate(),O.getTotal()
+//            );
+//            responseOrderDetailsDTOS.add(responseOrderDetailsDTO);
+            responseOrderDetailsDTOS.add(
+                    new ResponseOrderDetailsDTO(
+                            O.getCustomerName(),O.getCustomerAddress(),O.getContactNumbers(),O.getOrderDate(),O.getTotal()
+                    )
+            );
+        }
+        PaginatedResponseOrderDetailsDTO paginatedResponseOrderDetailsDTO = new PaginatedResponseOrderDetailsDTO(
+                responseOrderDetailsDTOS,
+                orderRepo.getOrderDetails(status)
+        );
+        return paginatedResponseOrderDetailsDTO;
     }
 }
