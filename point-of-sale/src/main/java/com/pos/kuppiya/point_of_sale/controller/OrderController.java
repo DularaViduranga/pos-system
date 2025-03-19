@@ -1,7 +1,6 @@
 package com.pos.kuppiya.point_of_sale.controller;
 
-import com.pos.kuppiya.point_of_sale.dto.paginated.PaginatedResponseItemDTO;
-import com.pos.kuppiya.point_of_sale.dto.request.ItemSaveRequestDTO;
+import com.pos.kuppiya.point_of_sale.dto.paginated.PaginatedResponseOrderDetails;
 import com.pos.kuppiya.point_of_sale.dto.request.OrderSaveRequestDTO;
 import com.pos.kuppiya.point_of_sale.service.OrderService;
 import com.pos.kuppiya.point_of_sale.util.StandardResponse;
@@ -30,22 +29,19 @@ public class OrderController {
     }
 
     @GetMapping(
-            params = {"paidStatus","page","size"},
+            params = {"Status","page","size"},
             path = {"/get_paid_status"}
     )
-    public ResponseEntity<StandardResponse> getPaidStatus(
-            @RequestParam(value = "paidStatus") String paidStatus,
+    public ResponseEntity<StandardResponse> getAllCustomers(
+            @RequestParam(value = "Status") String Status,
             @RequestParam(value = "page") int page,
             @RequestParam(value = "size") @Max(50) int size
             ){
-        PaginatedResponseItemDTO paginatedResponseItemDTO = null;
-        if(paidStatus.equalsIgnoreCase("PAID")||paidStatus.equalsIgnoreCase("Not paid")){
-
+        PaginatedResponseOrderDetails paginatedResponseOrderDetails = null;
+        if(Status.equalsIgnoreCase("ACTIVE")||Status.equalsIgnoreCase("INACTIVE")){
+            boolean status = Status.equalsIgnoreCase("ACTIVE")?true:false;
+            paginatedResponseOrderDetails = orderService.getAllOrderDetails(status,page,size);
         }
-
-
-
-
         return null;
     }
 

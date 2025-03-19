@@ -1,6 +1,8 @@
 package com.pos.kuppiya.point_of_sale.service.impl;
 
 import com.pos.kuppiya.point_of_sale.dto.CustomerDTO;
+import com.pos.kuppiya.point_of_sale.dto.QueryInterfaces.OrderDetailsInterface;
+import com.pos.kuppiya.point_of_sale.dto.paginated.PaginatedResponseOrderDetails;
 import com.pos.kuppiya.point_of_sale.dto.request.OrderSaveRequestDTO;
 import com.pos.kuppiya.point_of_sale.entity.Customer;
 import com.pos.kuppiya.point_of_sale.entity.Order;
@@ -14,6 +16,7 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -61,6 +64,14 @@ public class OrderServiceIMPL implements OrderService {
             }
             return "saved";
         }
+        return null;
+    }
+
+    @Override
+    public PaginatedResponseOrderDetails getAllOrderDetails(boolean status, int page, int size) {
+        List<OrderDetailsInterface> orderDetailsInterfaces = orderRepo.getPaidOrderDetails(status, PageRequest.of(page,size));
+
+        System.out.println(orderDetailsInterfaces.get(0).getCustomerName());
         return null;
     }
 }
