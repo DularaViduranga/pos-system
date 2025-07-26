@@ -22,7 +22,7 @@ public class Customer {
 
     @Id
     @Column(name = "customer_id", length = 45)
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customerId;
 
     @Column(name = "customer_name", length = 180, nullable = false)
@@ -47,4 +47,13 @@ public class Customer {
     @OneToMany(mappedBy="customer")
     private Set<Order> orders;
 
+    public Customer(int customerId, String customerName, String customerAddress, double customerSalary, ArrayList contactNumbers, String nic, boolean activeState) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.customerAddress = customerAddress;
+        this.customerSalary = customerSalary;
+        this.contactNumbers = contactNumbers;
+        this.nic = nic;
+        this.activeState = activeState;
+    }
 }
