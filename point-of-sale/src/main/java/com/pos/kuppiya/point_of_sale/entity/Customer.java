@@ -3,6 +3,9 @@ package com.pos.kuppiya.point_of_sale.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -12,11 +15,14 @@ import java.util.Set;
 @Entity
 @Table(name = "customer")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Customer {
 
     @Id
     @Column(name = "customer_id", length = 45)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customerId;
 
     @Column(name = "customer_name", length = 180, nullable = false)

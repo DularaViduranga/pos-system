@@ -44,7 +44,7 @@ public class CustomerServiceIMPL implements CustomerService {
     @Override
     public String addCustomer(CustomerSaveRequestDTO customerSaveRequestDTO) {
         Customer customer = new Customer(
-
+                customerSaveRequestDTO.getCustomerId(),
                 customerSaveRequestDTO.getCustomerName(),
                 customerSaveRequestDTO.getCustomerAddress(),
                 customerSaveRequestDTO.getCustomerSalary(),

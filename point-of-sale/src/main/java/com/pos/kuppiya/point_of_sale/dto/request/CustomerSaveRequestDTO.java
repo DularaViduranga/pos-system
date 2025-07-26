@@ -9,6 +9,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @Data
 public class CustomerSaveRequestDTO {
+    private int customerId;
     private String customerName;
     private String customerAddress;
     private double customerSalary;
